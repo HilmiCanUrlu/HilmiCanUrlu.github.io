@@ -364,22 +364,48 @@
   </footer>
 
   <script>
-    // Fotoğraf başlıkları ve varsayılan resimler
-    const photoTitles = [
-      "Kalp Atışı", "İlk Sarılma", "Sessiz Sevgi",
-      "Sığınak", "Bir Gülüşlük Mesafe", "Göz Gözeyken",
-      "Zaman Durdu", "Kalbin Sesi", "Biz Olmak",
-      "Kelebek Etkisi", "En Güzel An", "Ellerimiz",
-      "Beklenmedik Mucize", "Minik Detaylar", "Adım Adım Aşk",
-      "Sonsuzluk", "Bir Bakışta Her Şey", "Kalbin Aynası",
-      "Yan Yana", "Uyum İçinde", "Ruh Eşi",
-      "Gecenin Sessizliği", "Sabah Uyanışı", "Birlikte Güzel",
-      "Aşkın Renkleri", "Aklımdasın", "Zamanın Ötesi",
-      "An'ın İçinde", "Kayıp Zaman", "Sadece Biz",
-      "Seninle Evim", "Sıcacık Bir An", "İlkbahar Gibi",
-      "Birlikte Sessizlik", "Senle Güzel", "Aşkla Gülümsedik",
-      "Kalbin Ritmi", "Usulca", "Sözsüz Mutluluk",
-      "Her Şey Senken"
+    // Fotoğraf başlıkları ve resim eşleştirmeleri
+    const photoData = [
+      {title: "Kalp Atışı", image: "1.jpg"},
+      {title: "Sözsüz Mutluluk", image: "2.jpg"},
+      {title: "İlkbahar Gibi", image: "3.jpg"},
+      {title: "Sığınak", image: "4.jpg"},
+      {title: "Bir Gülüşlük Mesafe", image: "5.jpg"},
+      {title: "Adım Adım Aşk", image: "6.jpg"},
+      {title: "Zaman Durdu", image: "7.jpg"},
+      {title: "Kalbin Sesi", image: "8.jpg"},
+      {title: "Biz Olmak", image: "9.jpg"},
+      {title: "Kelebek Etkisi", image: "10.jpg"},
+      {title: "Bir Bakışta Her Şey", image: "11.jpg"},
+      {title: "Ellerimiz", image: "el ele.jpg"},
+      {title: "Aşkla Gülümsedik", image: "13.jpg"},
+      {title: "Minik Detaylar", image: "14.jpg"},
+      {title: "Sessiz Sevgi", image: "15.jpg"},
+      {title: "Sonsuzluk", image: "16.jpg"},
+      {title: "En Güzel An", image: "17.jpg"},
+      {title: "Kalbin Aynası", image: "18.jpg"},
+      {title: "Yan Yana", image: "19.jpg"},
+      {title: "Uyum İçinde", image: "20.jpg"},
+      {title: "Ruh Eşi", image: "21.jpg"},
+      {title: "Gecenin Sessizliği", image: "22.jpg"},
+      {title: "Sabah Uyanışı", image: "23.jpg"},
+      {title: "Birlikte Sessizlik", image: "24.jpg"},
+      {title: "Aşkın Renkleri", image: "25.jpg"},
+      {title: "Aklımdasın", image: "26.jpg"},
+      {title: "Zamanın Ötesi", image: "27.jpg"},
+      {title: "An'ın İçinde", image: "28.jpg"},
+      {title: "Kayıp Zaman", image: "29.jpg"},
+      {title: "Sadece Biz", image: "30.jpg"},
+      {title: "Seninle Evim", image: "31.jpg"},
+      {title: "Sıcacık Bir An", image: "32.jpg"},
+      {title: "Birlikte Güzel", image: "35.jpg"},
+      {title: "Kalp Atışı", image: "36.jpg"},
+      {title: "Kalbin Ritmi", image: "37.jpg"},
+      {title: "Usulca", image: "38.jpg"},
+      {title: "İlk Sarılma", image: "39.jpg"},
+      {title: "Her Şey Senken", image: "40.jpg"},
+      {title: "Göz Gözeyken", image: "41.jpg"},
+      {title: "Senle Güzel", image: "sen.jpg"}
     ];
 
     // Resim konumlarını ayarla
@@ -397,7 +423,7 @@
       const maxOffsetX = (cellWidth - imgWidth) * 0.3;
       const maxOffsetY = (cellHeight - imgHeight) * 0.3;
       
-      for (let i = 0; i < 41; i++) {
+      for (let i = 0; i < photoData.length; i++) {
         const col = i % cols;
         const row = Math.floor(i / cols);
         const offsetX = (Math.random() - 0.5) * maxOffsetX;
@@ -432,12 +458,12 @@
       polaroid.style.top = `${pos.y}px`;
       polaroid.style.transform = `rotate(${pos.rotate}deg) scale(${pos.scale}) translate(${pos.translateX}px, ${pos.translateY}px)`;
       
-      const title = photoTitles[index % photoTitles.length];
-      const imageUrl = `https://picsum.photos/300/200?random=${index + 1000}`;
+      const photo = photoData[index];
+      const imageUrl = `img/${photo.image}`;
       
       polaroid.innerHTML = `
-        <img src="${imageUrl}" alt="${title}">
-        <div class="polaroid-caption">${title}</div>
+        <img src="${imageUrl}" alt="${photo.title}" onerror="this.src='img/default.jpg'">
+        <div class="polaroid-caption">${photo.title}</div>
       `;
       
       container.appendChild(polaroid);
@@ -447,23 +473,21 @@
     function createGallery() {
       const galleryGrid = document.getElementById('galleryGrid');
       
-      for (let i = 0; i < 41; i++) {
+      photoData.forEach((photo, index) => {
         const galleryItem = document.createElement('div');
         galleryItem.className = 'gallery-item';
-        
-        const title = photoTitles[i % photoTitles.length];
-        const imageUrl = `https://picsum.photos/300/200?random=${i + 2000}`;
+        const imageUrl = `img/${photo.image}`;
         
         galleryItem.innerHTML = `
-          <img src="${imageUrl}" alt="${title}">
-          <div class="gallery-caption">${title}</div>
+          <img src="${imageUrl}" alt="${photo.title}" onerror="this.src='img/default.jpg'">
+          <div class="gallery-caption">${photo.title}</div>
         `;
         
         galleryGrid.appendChild(galleryItem);
-      }
+      });
     }
 
-    // Konteyner aç/kapa
+    // Konteyner aç/kapa fonksiyonu ve diğer fonksiyonlar aynen korundu...
     let isContainerManuallyOpened = false;
 
     function toggleContainer() {
@@ -514,7 +538,7 @@
     // Resimleri sırayla göster
     function showPhotosOneByOne() {
       let currentIndex = 0;
-      const order = Array.from({length: 41}, (_, i) => i);
+      const order = Array.from({length: photoData.length}, (_, i) => i);
       
       // Karıştırılmış sıra
       for (let i = order.length - 1; i > 0; i--) {
@@ -523,7 +547,7 @@
       }
       
       function showNext() {
-        if (currentIndex < 41) {
+        if (currentIndex < photoData.length) {
           createPolaroid(order[currentIndex]);
           currentIndex++;
           setTimeout(showNext, 100);
