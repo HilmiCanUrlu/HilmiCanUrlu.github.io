@@ -314,7 +314,7 @@
       }
     }
 
-    /* Google Fonts için link ekleyin */
+    /* Google Fonts */
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Poppins:wght@400;500&display=swap');
   </style>
 </head>
@@ -364,41 +364,25 @@
   </footer>
 
   <script>
-    photoTitles = [
-  "Kalp Atışı", "İlk Sarılma", "Sessiz Sevgi",
-  "Sığınak", "Bir Gülüşlük Mesafe", "Göz Gözeyken",
-  "Zaman Durdu", "Kalbin Sesi", "Biz Olmak",
-  "Kelebek Etkisi", "En Güzel An", "Ellerimiz",
-  "Beklenmedik Mucize", "Minik Detaylar", "Adım Adım Aşk",
-  "Sonsuzluk", "Bir Bakışta Her Şey", "Kalbin Aynası",
-  "Yan Yana", "Uyum İçinde", "Ruh Eşi",
-  "Gecenin Sessizliği", "Sabah Uyanışı", "Birlikte Güzel",
-  "Aşkın Renkleri", "Aklımdasın", "Zamanın Ötesi",
-  "An'ın İçinde", "Kayıp Zaman", "Sadece Biz",
-  "Seninle Evim", "Sıcacık Bir An", "İlkbahar Gibi",
-  "Birlikte Sessizlik", "Senle Güzel", "Aşkla Gülümsedik",
-  "Kalbin Ritmi", "Usulca", "Sözsüz Mutluluk",
-  "Her Şey Senken"
-];
+    // Fotoğraf başlıkları ve varsayılan resimler
+    const photoTitles = [
+      "Kalp Atışı", "İlk Sarılma", "Sessiz Sevgi",
+      "Sığınak", "Bir Gülüşlük Mesafe", "Göz Gözeyken",
+      "Zaman Durdu", "Kalbin Sesi", "Biz Olmak",
+      "Kelebek Etkisi", "En Güzel An", "Ellerimiz",
+      "Beklenmedik Mucize", "Minik Detaylar", "Adım Adım Aşk",
+      "Sonsuzluk", "Bir Bakışta Her Şey", "Kalbin Aynası",
+      "Yan Yana", "Uyum İçinde", "Ruh Eşi",
+      "Gecenin Sessizliği", "Sabah Uyanışı", "Birlikte Güzel",
+      "Aşkın Renkleri", "Aklımdasın", "Zamanın Ötesi",
+      "An'ın İçinde", "Kayıp Zaman", "Sadece Biz",
+      "Seninle Evim", "Sıcacık Bir An", "İlkbahar Gibi",
+      "Birlikte Sessizlik", "Senle Güzel", "Aşkla Gülümsedik",
+      "Kalbin Ritmi", "Usulca", "Sözsüz Mutluluk",
+      "Her Şey Senken"
+    ];
 
-    // Her başlık için sabit bir resim numarası
-    const photoMapping = {
-      "Kalp Atışı": "36.jpg", "İlk Sarılma": "39.jpg", "Sessiz Sevgi": "15.jpg",
-      "Sığınak": "4.jpg", "Bir Gülüşlük Mesafe": "5.jpg", "Göz Gözeyken": "41.jpg",
-      "Zaman Durdu": "7.jpg", "Kalbin Sesi": "8.jpg", "Biz Olmak": "9.jpg",
-      "Kelebek Etkisi": "10.jpg", "En Güzel An": "17.jpg", "Ellerimiz": "el ele.jpg",
-      "Beklenmedik Mucize": "1.jpg", "Minik Detaylar": "14.jpg", "Adım Adım Aşk": "6.jpg",
-      "Sonsuzluk": "16.jpg", "Bir Bakışta Her Şey": "11.jpg", "Kalbin Aynası": "18.jpg",
-      "Yan Yana": "19.jpg", "Uyum İçinde": "20.jpg", "Ruh Eşi": "21.jpg",
-      "Gecenin Sessizliği": "22.jpg", "Sabah Uyanışı": "23.jpg", "Birlikte Güzel": "35.jpg",
-      "Aşkın Renkleri": "25.jpg", "Aklımdasın": "26.jpg", "Zamanın Ötesi": "27.jpg",
-      "An'ın İçinde": "28.jpg", "Kayıp Zaman": "29.jpg", "Sadece Biz": "30.jpg",
-      "Seninle Evim": "31.jpg", "Sıcacık Bir An": "32.jpg", "İlkbahar Gibi": "3.jpg",
-      "Birlikte Sessizlik": "24.jpg", "Senle Güzel": "sen.jpg", "Aşkla Gülümsedik": "13.jpg",
-      "Kalbin Ritmi": "37.jpg", "Usulca": "38.jpg", "Sözsüz Mutluluk": "2.jpg",
-      "Her Şey Senken": "40.jpg"
-    };
-
+    // Resim konumlarını ayarla
     function getAdjustedPositions() {
       const positions = [];
       const screenWidth = window.innerWidth;
@@ -437,15 +421,7 @@
       return positions;
     }
 
-    function createRandomOrder() {
-      const order = Array.from({length: 41}, (_, i) => i);
-      for (let i = order.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [order[i], order[j]] = [order[j], order[i]];
-      }
-      return order;
-    }
-
+    // Polaroid oluştur
     function createPolaroid(index) {
       const container = document.getElementById('polaroidContainer');
       const polaroid = document.createElement('div');
@@ -457,56 +433,69 @@
       polaroid.style.transform = `rotate(${pos.rotate}deg) scale(${pos.scale}) translate(${pos.translateX}px, ${pos.translateY}px)`;
       
       const title = photoTitles[index % photoTitles.length];
-      const imageFile = photoMapping[title] || 'default.jpg';
+      const imageUrl = `https://picsum.photos/300/200?random=${index + 1000}`;
       
       polaroid.innerHTML = `
-        <img src="img/${imageFile}" alt="${title}" onerror="this.src='img/default.jpg'">
+        <img src="${imageUrl}" alt="${title}">
         <div class="polaroid-caption">${title}</div>
       `;
       
       container.appendChild(polaroid);
     }
 
+    // Galeri oluştur
+    function createGallery() {
+      const galleryGrid = document.getElementById('galleryGrid');
+      
+      for (let i = 0; i < 41; i++) {
+        const galleryItem = document.createElement('div');
+        galleryItem.className = 'gallery-item';
+        
+        const title = photoTitles[i % photoTitles.length];
+        const imageUrl = `https://picsum.photos/300/200?random=${i + 2000}`;
+        
+        galleryItem.innerHTML = `
+          <img src="${imageUrl}" alt="${title}">
+          <div class="gallery-caption">${title}</div>
+        `;
+        
+        galleryGrid.appendChild(galleryItem);
+      }
+    }
+
+    // Konteyner aç/kapa
     let isContainerManuallyOpened = false;
 
     function toggleContainer() {
       const container = document.getElementById('mainContainer');
       const toggleBtn = document.getElementById('toggleContainerBtn');
       
-      // Konteyner'ı göster
       container.style.display = 'block';
       setTimeout(() => {
         container.style.opacity = '1';
       }, 50);
       
-      // Butonu gizle
       toggleBtn.style.display = 'none';
-      
-      // Manuel açıldığını işaretle
       isContainerManuallyOpened = true;
       
-      // Sayfayı en üste kaydır
       window.scrollTo({
         top: 0,
         behavior: 'smooth'
       });
 
-      // 1 saniye sonra flag'i sıfırla
       setTimeout(() => {
         isContainerManuallyOpened = false;
       }, 1000);
     }
 
-    // Scroll olayını dinle
+    // Scroll kontrolü
     window.addEventListener('scroll', function() {
       const container = document.getElementById('mainContainer');
       const toggleBtn = document.getElementById('toggleContainerBtn');
       const scrollPosition = window.scrollY;
       
-      // Manuel açıldıysa scroll kontrolünü yapma
       if (isContainerManuallyOpened) return;
       
-      // 50px'den fazla scroll yapıldığında mesajı gizle
       if (scrollPosition > 50) {
         container.style.opacity = '0';
         setTimeout(() => {
@@ -522,46 +511,27 @@
       }
     });
 
-    function createGallery() {
-      const galleryGrid = document.getElementById('galleryGrid');
-      
-      for (let i = 0; i < 41; i++) {
-        const galleryItem = document.createElement('div');
-        galleryItem.className = 'gallery-item';
-        
-        const title = photoTitles[i % photoTitles.length];
-        const imageFile = photoMapping[title] || 'default.jpg';
-        
-        galleryItem.innerHTML = `
-          <img src="img/${imageFile}" alt="${title}" onerror="this.src='img/default.jpg'">
-          <div class="gallery-caption">${title}</div>
-        `;
-        
-        galleryGrid.appendChild(galleryItem);
-      }
-    }
-
+    // Resimleri sırayla göster
     function showPhotosOneByOne() {
       let currentIndex = 0;
-      const randomOrder = createRandomOrder();
-      const container = document.getElementById('mainContainer');
+      const order = Array.from({length: 41}, (_, i) => i);
       
-      // Başlangıçta konteyner'ı gizle
-      container.style.display = 'none';
-      container.style.opacity = '0';
+      // Karıştırılmış sıra
+      for (let i = order.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [order[i], order[j]] = [order[j], order[i]];
+      }
       
       function showNext() {
         if (currentIndex < 41) {
-          createPolaroid(randomOrder[currentIndex]);
+          createPolaroid(order[currentIndex]);
           currentIndex++;
           setTimeout(showNext, 100);
         } else {
-          // Tüm resimler gösterildikten sonra
           setTimeout(() => {
-            // Konteyner'ı göster
-            container.style.display = 'block';
+            document.getElementById('mainContainer').style.display = 'block';
             setTimeout(() => {
-              container.style.opacity = '1';
+              document.getElementById('mainContainer').style.opacity = '1';
             }, 50);
             
             document.querySelector('footer').style.opacity = 1;
@@ -578,15 +548,7 @@
       showNext();
     }
 
-    window.onload = function() {
-      document.body.style.overflow = 'hidden';
-      const container = document.getElementById('mainContainer');
-      container.style.display = 'none';
-      container.style.opacity = '0';
-      showPhotosOneByOne();
-      document.getElementById('toggleContainerBtn').style.display = 'none';
-    };
-
+    // Pencere boyutu değiştiğinde yeniden konumlandır
     window.addEventListener('resize', function() {
       const newPositions = getAdjustedPositions();
       const polaroids = document.querySelectorAll('.polaroid');
@@ -596,6 +558,15 @@
         polaroid.style.top = `${pos.y}px`;
       });
     });
+
+    // Sayfa yüklendiğinde
+    window.onload = function() {
+      document.body.style.overflow = 'hidden';
+      document.getElementById('mainContainer').style.display = 'none';
+      document.getElementById('mainContainer').style.opacity = '0';
+      document.getElementById('toggleContainerBtn').style.display = 'none';
+      showPhotosOneByOne();
+    };
   </script>
 </body>
 </html>
